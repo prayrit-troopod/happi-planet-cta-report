@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>html{color-scheme:light}body{margin:0;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Happi Planet CTA Funnels</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: single readable column of report sections; funnels drawn as proportional bars, numbers in a mono utility face */
+:root {
+  --bg: #ffffff;
+  --surface: #f7f5fc;
+  --fg: #16141c;
+  --muted: #6b6779;
+  --line: #e6e2f0;
+  --accent: #8e3ff1;
+  --accent-soft: #efe5fd;
+  --bar-2: #c4a3f8;
+  --warn: #b25e00;
+  --warn-soft: #fff3e3;
+  --good: #1d7a4d;
+  --rest: #ddd6ea;
+  --font-display: "Poppins", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Poppins", "Segoe UI", system-ui, sans-serif;
+  --font-data: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121017; --surface: #1c1924; --fg: #f1eff6; --muted: #a39fb2; --line: #2d2938;
+    --accent: #b083f7; --accent-soft: #2a2140; --bar-2: #6c4aa3; --warn: #f0a24b; --warn-soft: #2e2214; --good: #5cc795; --rest: #3a3448;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121017; --surface: #1c1924; --fg: #f1eff6; --muted: #a39fb2; --line: #2d2938;
+  --accent: #b083f7; --accent-soft: #2a2140; --bar-2: #6c4aa3; --warn: #f0a24b; --warn-soft: #2e2214; --good: #5cc795; --rest: #3a3448;
+  color-scheme: dark;
+}
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 15px; line-height: 1.6; }
+.wrap { max-width: 860px; margin: 0 auto; padding-inline: 20px; padding-block: 40px 64px; display: grid; gap: 48px; }
+header { display: grid; gap: 14px; }
+.logo { height: 26px; width: auto; }
+.eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
+h1 { font-family: var(--font-display); font-size: clamp(28px, 5vw, 40px); line-height: 1.15; font-weight: 700; margin: 0; text-wrap: balance; }
+h2 { font-size: 22px; line-height: 1.3; font-weight: 600; margin: 0; text-wrap: balance; }
+h3 { font-size: 16px; font-weight: 600; margin: 0; }
+p { margin: 0; max-width: 68ch; }
+.sub { color: var(--muted); }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 13px; color: var(--muted); }
+.meta b { color: var(--fg); font-weight: 500; }
+.divider { height: 3px; width: 56px; background: var(--accent); border-radius: 2px; }
+section { display: grid; gap: 18px; }
+.num { font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+
+/* Key takeaways */
+.takeaways { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
+.takeaways li { display: grid; grid-template-columns: 28px 1fr; gap: 12px; align-items: start; }
+.takeaways .k { font-family: var(--font-data); font-size: 13px; color: var(--accent); font-weight: 500; padding-top: 2px; }
+
+/* Headline figures */
+.figs { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+.fig { background: var(--surface); border-radius: 10px; padding: 16px; display: grid; gap: 4px; }
+.fig .v { font-family: var(--font-data); font-size: 26px; font-weight: 500; line-height: 1.2; }
+.fig .l { font-size: 13px; color: var(--muted); }
+
+/* Funnel */
+.funnel { display: grid; gap: 10px; }
+.step { display: grid; grid-template-columns: minmax(130px, 190px) 1fr; gap: 14px; align-items: center; }
+.step .name { font-size: 14px; font-weight: 500; }
+.step .name small { display: block; font-size: 12px; color: var(--muted); font-weight: 400; }
+.track { position: relative; height: 34px; background: var(--surface); border-radius: 6px; overflow: hidden; }
+.bar { height: 100%; background: var(--accent); border-radius: 6px; min-width: 3px; }
+.bar.flag { background: repeating-linear-gradient(135deg, var(--bar-2) 0 6px, var(--accent-soft) 6px 12px); }
+.track .lab { position: absolute; inset: 0 auto 0 0; display: flex; align-items: center; gap: 10px; padding-left: 10px; font-family: var(--font-data); font-size: 13px; font-variant-numeric: tabular-nums; }
+.lab .u { font-weight: 500; color: var(--fg); background: var(--bg); padding: 1px 6px; border-radius: 4px; }
+.lab .r { color: var(--fg); background: var(--bg); padding: 1px 6px; border-radius: 4px; font-size: 12px; }
+.lab .r.warn { color: var(--warn); }
+
+.note { background: var(--warn-soft); border-left: 3px solid var(--warn); padding: 12px 14px; border-radius: 0 8px 8px 0; font-size: 14px; display: grid; gap: 4px; }
+.note b { color: var(--warn); font-weight: 600; }
+.legend { font-size: 12px; color: var(--muted); display: flex; gap: 8px; align-items: center; }
+.legend i { display: inline-block; width: 18px; height: 10px; border-radius: 2px; background: repeating-linear-gradient(135deg, var(--bar-2) 0 4px, var(--accent-soft) 4px 8px); }
+
+/* Tables */
+.tbl { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 560px; }
+th, td { padding: 10px 14px; text-align: right; border-bottom: 1px solid var(--line); }
+th:first-child, td:first-child { text-align: left; }
+th { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 600; background: var(--surface); }
+td.num, td .num { font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+tr:last-child td { border-bottom: 0; }
+tr.total td { font-weight: 600; background: var(--accent-soft); }
+.pill { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; letter-spacing: .02em; }
+.pill.ok { color: var(--good); background: color-mix(in srgb, var(--good) 14%, transparent); }
+.pill.no { color: var(--warn); background: var(--warn-soft); }
+
+/* Next steps */
+.steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; counter-reset: s; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 32px 1fr; gap: 12px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 10px; }
+.steps li::before { content: counter(s); font-family: var(--font-data); font-weight: 500; color: var(--accent); width: 26px; height: 26px; border-radius: 50%; background: var(--accent-soft); display: grid; place-items: center; font-size: 13px; }
+.steps li > div { display: grid; gap: 4px; min-width: 0; }
+.steps li.rev { border-color: var(--accent); background: var(--accent-soft); }
+.share { display: grid; grid-template-columns: 180px 1fr; gap: 24px; align-items: center; padding: 20px; border: 1px solid var(--line); border-radius: 10px; }
+.donut { width: 100%; max-width: 180px; height: auto; }
+.donut-v { font-family: var(--font-data); font-size: 24px; font-weight: 500; }
+.donut-l { font-family: var(--font-body); font-size: 12px; }
+.share-text { display: grid; gap: 12px; min-width: 0; }
+.key { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.key li { display: grid; grid-template-columns: 12px 1fr auto 52px; gap: 10px; align-items: center; font-size: 14px; }
+.key i { width: 12px; height: 12px; border-radius: 3px; }
+.key b { font-weight: 500; font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+.key em { font-style: normal; text-align: right; color: var(--muted); font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+.key li.tot { border-top: 1px solid var(--line); padding-top: 8px; font-weight: 600; }
+@media (max-width: 560px) { .share { grid-template-columns: 1fr; justify-items: center; } .share-text { width: 100%; } }
+.formula { font-family: var(--font-data); font-size: 14px; background: var(--accent-soft); color: var(--fg); padding: 10px 14px; border-radius: 8px; justify-self: start; }
+.formula span { color: var(--accent); padding-inline: 4px; }
+.split { display: grid; gap: 10px; }
+.split-row { display: grid; grid-template-columns: 190px 1fr; gap: 14px; align-items: center; }
+.split-label { font-size: 14px; font-weight: 500; }
+.split-bar { display: flex; height: 34px; border-radius: 6px; overflow: hidden; font-family: var(--font-data); font-size: 12px; }
+.split-bar span { display: flex; align-items: center; padding-inline: 10px; white-space: nowrap; overflow: hidden; }
+.s-sticky { background: var(--bar-2); color: var(--fg); }
+.s-fbt { background: var(--accent); color: #fff; justify-content: flex-end; }
+@media (max-width: 560px) { .split-row { grid-template-columns: 1fr; gap: 6px; } }
+.verdict { display: grid; gap: 6px; padding: 16px 18px; border: 1px solid var(--accent); background: var(--accent-soft); border-radius: 10px; }
+.verdict-k { font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+.reasons { margin: 0; padding-left: 20px; display: grid; gap: 8px; }
+.reasons li { max-width: 68ch; }
+.method { font-size: 13px; color: var(--muted); display: grid; gap: 6px; border-top: 1px solid var(--line); padding-top: 20px; }
+.method p { max-width: none; }
+
+@media (max-width: 560px) {
+  .step { grid-template-columns: 1fr; gap: 6px; }
+}
+</style>
+</head><body>
+
+<div class="wrap">
+  <header>
+    <img class="logo" src="data:image/png;base64,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" alt="Troopod">
+    <div class="eyebrow">Troopod · CTA performance report</div>
+    <h1>Sticky Cart and Frequently Bought Together: how shoppers move from click to purchase</h1>
+    <p class="sub">Happi Planet product pages. A side-by-side read of the two add-to-cart buttons: how shoppers use them, how often they buy, and the revenue each one brings in.</p>
+    <div class="meta">
+      <span>Period <b>11–14 Oct 2026</b></span>
+      <span>Source <b>GA4 funnel exploration</b></span>
+      <span>Property <b>Happi Planet (GTM)</b></span>
+    </div>
+    <div class="divider"></div>
+  </header>
+
+  <section aria-labelledby="sum">
+    <h2 id="sum">What the data says</h2>
+    <ul class="takeaways">
+      <li><span class="k">01</span><p><b>Sticky Cart is the main way people add to cart.</b> It drew <span class="num">49,939</span> button clicks in four days, about six times the <span class="num">8,061</span> clicks on Frequently Bought Together (FBT).</p></li>
+      <li><span class="k">02</span><p><b>Both buttons work as intended.</b> On Tap Cleaner and Kitchen Cleaner, where both are fully tracked, about <span class="num">97%</span> of clicks on either button become a cart add.</p></li>
+      <li><span class="k">03</span><p><b>FBT shoppers are more likely to buy.</b> <span class="num">19.6%</span> of FBT clicks end in a purchase, against <span class="num">15.1%</span> for Sticky Cart. FBT shoppers have scrolled to the bundle and chosen extra products, so they arrive with stronger intent.</p></li>
+      <li><span class="k">04</span><p><b>Each FBT add is worth almost three times a Sticky Cart add:</b> about <span class="num">₹588</span> of cart value against <span class="num">₹205</span>. On the Tap Cleaner page, Sticky Cart brings in about <span class="num">58%</span> of cart value and FBT about <span class="num">24%</span>.</p></li>
+      <li><span class="k">05</span><p><b>FBT brings in about a third of the revenue from these two buttons.</b> On Tap Cleaner and Kitchen Cleaner, we estimate <span class="num">₹2.07 lakh</span> of revenue from FBT and <span class="num">₹3.49 lakh</span> from Sticky Cart, so FBT drives about <span class="num">37%</span> of it from only <span class="num">14%</span> of the clicks.</p></li>
+      <li><span class="k">06</span><p><b>The biggest drop for both buttons is between cart and checkout.</b> Roughly half of shoppers who add to cart don't start checkout. That cart step is the clearest place to improve.</p></li>
+      <li><span class="k">07</span><p><b>Tracking is live on Tap Cleaner and Kitchen Cleaner only.</b> Magic Eraser, Washing Machine Cleaner, Copper Cleaner and other pages use older versions of both buttons that don't yet send the add-to-cart event. About three in four clicks on each button happen on those pages, so the funnels and estimates in this report cover Tap Cleaner and Kitchen Cleaner.</p></li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="sticky">
+    <h2 id="sticky">Sticky Cart</h2>
+    <p class="sub">Measured on Tap Cleaner &amp; Limescale Remover and Kitchen Cleaner, the pages with the new sticky bar. Shoppers who clicked the Sticky Cart "Add To Cart" button, added to cart within 2 minutes, began checkout within 30 minutes and purchased within 1 hour.</p>
+    <div class="figs">
+      <div class="fig"><span class="v">96.6%</span><span class="l">of clicks became a cart add</span></div>
+      <div class="fig"><span class="v">45.2%</span><span class="l">of adds began checkout</span></div>
+      <div class="fig"><span class="v">34.5%</span><span class="l">of checkouts became purchases</span></div>
+      <div class="fig"><span class="v">15.1%</span><span class="l">of clicks ended in a purchase</span></div>
+    </div>
+    <div class="funnel" role="list" aria-label="Sticky Cart funnel, tracked pages">
+      <div class="step" role="listitem"><div class="name">Clicked Sticky Cart</div><div class="track"><div class="bar" style="width:100%"></div><div class="lab"><span class="u">11,254</span></div></div></div>
+      <div class="step" role="listitem"><div class="name">Added to cart</div><div class="track"><div class="bar" style="width:96.6%"></div><div class="lab"><span class="u">10,868</span><span class="r">96.6% of clicks</span></div></div></div>
+      <div class="step" role="listitem"><div class="name">Began checkout</div><div class="track"><div class="bar" style="width:43.7%"></div><div class="lab"><span class="u">4,917</span><span class="r">45.2% of adds</span></div></div></div>
+      <div class="step" role="listitem"><div class="name">Purchased</div><div class="track"><div class="bar" style="width:15.1%"></div><div class="lab"><span class="u">1,698</span><span class="r">34.5% of checkouts</span></div></div></div>
+    </div>
+
+    <h3>Sticky Cart clicks by product page</h3>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Product page</th><th>Sticky clicks</th><th>Added to cart</th><th>Began checkout</th><th>Purchased</th><th>Tracking</th></tr></thead>
+        <tbody>
+          <tr><td>Tap Cleaner &amp; Limescale Remover</td><td class="num">6,833</td><td class="num">6,592</td><td class="num">3,036</td><td class="num">1,045</td><td><span class="pill ok">Live</span></td></tr>
+          <tr><td>Kitchen Cleaner</td><td class="num">4,421</td><td class="num">4,276</td><td class="num">1,881</td><td class="num">653</td><td><span class="pill ok">Live</span></td></tr>
+          <tr class="total"><td>Tracked pages total</td><td class="num">11,254</td><td class="num">10,868</td><td class="num">4,917</td><td class="num">1,698</td><td></td></tr>
+          <tr><td>Magic Eraser</td><td class="num">22,722</td><td class="num">–</td><td class="num">–</td><td class="num">–</td><td><span class="pill no">Not tracked</span></td></tr>
+          <tr><td>Washing Machine Cleaner &amp; Descaler</td><td class="num">9,757</td><td class="num">–</td><td class="num">–</td><td class="num">–</td><td><span class="pill no">Not tracked</span></td></tr>
+          <tr><td>Copper Bronze &amp; Brass Cleaner 300 ML</td><td class="num">3,561</td><td class="num">–</td><td class="num">–</td><td class="num">–</td><td><span class="pill no">Not tracked</span></td></tr>
+          <tr><td>Other product pages</td><td class="num">2,645</td><td class="num">–</td><td class="num">–</td><td class="num">–</td><td><span class="pill no">Not tracked</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">
+      <b>Magic Eraser has the most Sticky Cart clicks, but its adds aren't tracked yet</b>
+      <span>Pages other than Tap Cleaner and Kitchen Cleaner use an older version of the sticky bar that doesn't send the add-to-cart event. Shoppers there still add and buy normally; we just can't follow them in this funnel yet. About 77% of Sticky Cart clicks happen on these pages.</span>
+    </div>
+  </section>
+
+  <section aria-labelledby="fbt">
+    <h2 id="fbt">Frequently Bought Together</h2>
+    <p class="sub">Measured on the same two pages, Tap Cleaner &amp; Limescale Remover and Kitchen Cleaner, with the same time windows as Sticky Cart.</p>
+    <div class="figs">
+      <div class="fig"><span class="v">97.2%</span><span class="l">of clicks became a cart add</span></div>
+      <div class="fig"><span class="v">49.7%</span><span class="l">of adds began checkout</span></div>
+      <div class="fig"><span class="v">40.6%</span><span class="l">of checkouts became purchases</span></div>
+      <div class="fig"><span class="v">19.6%</span><span class="l">of clicks ended in a purchase</span></div>
+    </div>
+    <div class="funnel" role="list" aria-label="FBT funnel, tracked pages">
+      <div class="step" role="listitem"><div class="name">Clicked FBT</div><div class="track"><div class="bar" style="width:100%"></div><div class="lab"><span class="u">1,803</span></div></div></div>
+      <div class="step" role="listitem"><div class="name">Added to cart</div><div class="track"><div class="bar" style="width:97.2%"></div><div class="lab"><span class="u">1,752</span><span class="r">97.2% of clicks</span></div></div></div>
+      <div class="step" role="listitem"><div class="name">Began checkout</div><div class="track"><div class="bar" style="width:48.3%"></div><div class="lab"><span class="u">870</span><span class="r">49.7% of adds</span></div></div></div>
+      <div class="step" role="listitem"><div class="name">Purchased</div><div class="track"><div class="bar" style="width:19.6%"></div><div class="lab"><span class="u">353</span><span class="r">40.6% of checkouts</span></div></div></div>
+    </div>
+
+    <h3>FBT clicks by product page</h3>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Product page</th><th>FBT clicks</th><th>Added to cart</th><th>Began checkout</th><th>Purchased</th><th>Tracking</th></tr></thead>
+        <tbody>
+          <tr><td>Tap Cleaner &amp; Limescale Remover</td><td class="num">1,154</td><td class="num">1,116</td><td class="num">559</td><td class="num">222</td><td><span class="pill ok">Live</span></td></tr>
+          <tr><td>Kitchen Cleaner</td><td class="num">649</td><td class="num">636</td><td class="num">311</td><td class="num">131</td><td><span class="pill ok">Live</span></td></tr>
+          <tr class="total"><td>Tracked pages total</td><td class="num">1,803</td><td class="num">1,752</td><td class="num">870</td><td class="num">353</td><td></td></tr>
+          <tr><td>Magic Eraser</td><td class="num">3,826</td><td class="num">–</td><td class="num">–</td><td class="num">–</td><td><span class="pill no">Not tracked</span></td></tr>
+          <tr><td>Washing Machine Cleaner &amp; Descaler</td><td class="num">1,406</td><td class="num">–</td><td class="num">–</td><td class="num">–</td><td><span class="pill no">Not tracked</span></td></tr>
+          <tr><td>Copper Bronze &amp; Brass Cleaner 300 ML</td><td class="num">677</td><td class="num">–</td><td class="num">–</td><td class="num">–</td><td><span class="pill no">Not tracked</span></td></tr>
+          <tr><td>Other product pages</td><td class="num">349</td><td class="num">–</td><td class="num">–</td><td class="num">–</td><td><span class="pill no">Not tracked</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">
+      <b>The same pages are missing for FBT</b>
+      <span>Magic Eraser, Washing Machine Cleaner, Copper Cleaner and several other pages use a different version of the FBT block that doesn't yet send the add-to-cart event. About 78% of FBT clicks happen on these pages.</span>
+    </div>
+  </section>
+
+  <section aria-labelledby="rev">
+    <h2 id="rev">FBT cart value</h2>
+    <p class="sub">The total value of products added to cart through the FBT button, 11–14 Oct 2026. Taken from the value sent with each FBT add to cart.</p>
+    <div class="figs">
+      <div class="fig"><span class="v">₹10,67,778</span><span class="l">added to carts through FBT</span></div>
+      <div class="fig"><span class="v">1,817</span><span class="l">FBT add-to-carts</span></div>
+      <div class="fig"><span class="v">₹588</span><span class="l">average cart value per FBT add</span></div>
+      <div class="fig"><span class="v">24.2%</span><span class="l">of all cart value on these pages</span></div>
+    </div>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Product page</th><th>FBT adds</th><th>FBT cart value</th><th>Per add</th><th>All cart value on page</th><th>FBT share</th></tr></thead>
+        <tbody>
+          <tr><td>Tap Cleaner &amp; Limescale Remover</td><td class="num">1,040</td><td class="num">₹6,01,215</td><td class="num">₹578</td><td class="num">₹24,85,201</td><td class="num">24.2%</td></tr>
+          <tr><td>Kitchen Cleaner</td><td class="num">621</td><td class="num">₹3,74,906</td><td class="num">₹604</td><td class="num">₹16,37,877</td><td class="num">22.9%</td></tr>
+          <tr><td>Tap Cleaner &amp; Limescale Remover 1.5L</td><td class="num">80</td><td class="num">₹44,050</td><td class="num">₹551</td><td class="num">₹1,45,958</td><td class="num">30.2%</td></tr>
+          <tr><td>Bathroom Cleaner</td><td class="num">43</td><td class="num">₹23,600</td><td class="num">₹549</td><td class="num">₹73,622</td><td class="num">32.1%</td></tr>
+          <tr><td>Tap Cleaner &amp; Limescale Remover 500 ML</td><td class="num">27</td><td class="num">₹19,362</td><td class="num">₹717</td><td class="num">₹60,492</td><td class="num">32.0%</td></tr>
+          <tr><td>Hindi, Tamil, Marathi and Telugu versions of these pages</td><td class="num">6</td><td class="num">₹4,645</td><td class="num">₹774</td><td class="num">₹7,036</td><td class="num">66.0%</td></tr>
+          <tr class="total"><td>Total</td><td class="num">1,817</td><td class="num">₹10,67,778</td><td class="num">₹588</td><td class="num">₹44,10,186</td><td class="num">24.2%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="share">
+      <svg class="donut" viewBox="0 0 160 160" role="img" aria-label="Tap Cleaner and Limescale Remover page cart value: Sticky Cart 57.9%, FBT 24.2%, other 17.9%">
+        <circle cx="80" cy="80" r="60" fill="none" stroke="var(--rest)" stroke-width="26"></circle>
+        <circle cx="80" cy="80" r="60" fill="none" stroke="var(--bar-2)" stroke-width="26" stroke-dasharray="218.32 158.67" stroke-dashoffset="-91.20" transform="rotate(-90 80 80)"></circle>
+        <circle cx="80" cy="80" r="60" fill="none" stroke="var(--accent)" stroke-width="26" stroke-dasharray="91.20 285.79" transform="rotate(-90 80 80)"></circle>
+        <text x="80" y="78" text-anchor="middle" class="donut-v" fill="var(--fg)">24.2%</text>
+        <text x="80" y="98" text-anchor="middle" class="donut-l" fill="var(--muted)">via FBT</text>
+      </svg>
+      <div class="share-text">
+        <h3>Tap Cleaner &amp; Limescale Remover: where cart value comes from</h3>
+        <ul class="key">
+          <li><i style="background:var(--accent)"></i><span>Added through FBT</span><b class="num">₹6,01,215</b><em class="num">24.2%</em></li>
+          <li><i style="background:var(--bar-2)"></i><span>Added through Sticky Cart</span><b class="num">₹14,39,234</b><em class="num">57.9%</em></li>
+          <li><i style="background:var(--rest)"></i><span>Other / not attributed</span><b class="num">₹4,44,752</b><em class="num">17.9%</em></li>
+          <li class="tot"><i></i><span>All add-to-carts on this page</span><b class="num">₹24,85,201</b><em class="num">100%</em></li>
+        </ul>
+        <p class="sub">11–14 Oct 2026, Tap Cleaner &amp; Limescale Remover product page only. Sticky Cart value is the pack price recorded on each Sticky Cart click. "Other" covers cart drawer changes and offers, the buttons at the bottom of the page, and any adds whose button event didn't come through, so FBT's and Sticky Cart's shares are minimums.</p>
+      </div>
+    </div>
+    <div class="note">
+      <b>How to read this number</b>
+      <span>This is the value shoppers added to their carts, not completed sales. Of shoppers who add through FBT, about 20% go on to buy in the same visit. It also leaves out the pages where FBT isn't tracked, so the true FBT figure is higher.</span>
+    </div>
+  </section>
+
+  <section aria-labelledby="cmp">
+    <h2 id="cmp">Side by side, on the same pages</h2>
+    <p class="sub">Tap Cleaner &amp; Limescale Remover and Kitchen Cleaner, 11–14 Oct 2026.</p>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Step</th><th>Sticky Cart</th><th>FBT</th></tr></thead>
+        <tbody>
+          <tr><td>Clicks</td><td class="num">11,254</td><td class="num">1,803</td></tr>
+          <tr><td>Click → cart add</td><td class="num">96.6%</td><td class="num">97.2%</td></tr>
+          <tr><td>Cart add → began checkout</td><td class="num">45.2%</td><td class="num">49.7%</td></tr>
+          <tr><td>Began checkout → purchased</td><td class="num">34.5%</td><td class="num">40.6%</td></tr>
+          <tr><td>Click → purchased</td><td class="num">15.1%</td><td class="num">19.6%</td></tr>
+          <tr><td>Cart value per add (Tap Cleaner)</td><td class="num">₹205</td><td class="num">₹578</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Sticky Cart brings the volume and FBT brings bigger, higher-intent baskets. About half of the shoppers who add to cart through either button never start checkout, so the cart drawer step is where we'd look first for improvements.</p>
+  </section>
+
+  <section aria-labelledby="est">
+    <h2 id="est">Estimated revenue by button</h2>
+    <p class="sub">Tap Cleaner &amp; Limescale Remover and Kitchen Cleaner, 11–14 Oct 2026. For each button we take the shoppers who bought after adding to cart through it, and multiply by the average cart value of an add from that button.</p>
+    <div class="formula">Purchases <span>×</span> average cart value per add <span>=</span> estimated revenue</div>
+    <div class="figs">
+      <div class="fig"><span class="v">₹3,49,184</span><span class="l">estimated revenue from Sticky Cart</span></div>
+      <div class="fig"><span class="v">₹2,07,423</span><span class="l">estimated revenue from FBT</span></div>
+      <div class="fig"><span class="v">37.3%</span><span class="l">of the two buttons' revenue comes from FBT</span></div>
+      <div class="fig"><span class="v">3.7×</span><span class="l">more revenue per click from FBT (₹115 vs ₹31)</span></div>
+    </div>
+
+    <div class="split" role="img" aria-label="Sticky Cart has 86.2% of clicks but 62.7% of estimated revenue; FBT has 13.8% of clicks and 37.3% of estimated revenue">
+      <div class="split-row">
+        <span class="split-label">Share of clicks</span>
+        <div class="split-bar"><span class="s-sticky" style="width:86.2%">Sticky Cart 86.2%</span><span class="s-fbt" style="width:13.8%">13.8%</span></div>
+      </div>
+      <div class="split-row">
+        <span class="split-label">Share of estimated revenue</span>
+        <div class="split-bar"><span class="s-sticky" style="width:62.7%">Sticky Cart 62.7%</span><span class="s-fbt" style="width:37.3%">FBT 37.3%</span></div>
+      </div>
+    </div>
+
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Both pages combined</th><th>Sticky Cart</th><th>FBT</th></tr></thead>
+        <tbody>
+          <tr><td>Clicks</td><td class="num">11,254</td><td class="num">1,803</td></tr>
+          <tr><td>Shoppers who added to cart</td><td class="num">10,868</td><td class="num">1,752</td></tr>
+          <tr><td>Average cart value per add</td><td class="num">₹206</td><td class="num">₹588</td></tr>
+          <tr><td>Began checkout (% of adds)</td><td class="num">4,917 (45.2%)</td><td class="num">870 (49.7%)</td></tr>
+          <tr><td>Purchased (% of adds)</td><td class="num">1,698 (15.6%)</td><td class="num">353 (20.1%)</td></tr>
+          <tr class="total"><td>Estimated revenue</td><td class="num">₹3,49,184</td><td class="num">₹2,07,423</td></tr>
+          <tr><td>Estimated revenue per click</td><td class="num">₹31</td><td class="num">₹115</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>By product page</h3>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Page and button</th><th>Purchases</th><th>Cart value per add</th><th>Estimated revenue</th></tr></thead>
+        <tbody>
+          <tr><td>Tap Cleaner · Sticky Cart</td><td class="num">1,045</td><td class="num">₹205</td><td class="num">₹2,14,704</td></tr>
+          <tr><td>Tap Cleaner · FBT</td><td class="num">222</td><td class="num">₹578</td><td class="num">₹1,28,336</td></tr>
+          <tr><td>Kitchen Cleaner · Sticky Cart</td><td class="num">653</td><td class="num">₹206</td><td class="num">₹1,34,480</td></tr>
+          <tr><td>Kitchen Cleaner · FBT</td><td class="num">131</td><td class="num">₹604</td><td class="num">₹79,087</td></tr>
+          <tr class="total"><td>Total</td><td class="num">2,051</td><td class="num">–</td><td class="num">₹5,56,607</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>FBT gets about 1 in 7 clicks but brings in more than a third of the revenue from these two buttons. Its shoppers buy more often and fill bigger carts, so each FBT click is worth almost four times a Sticky Cart click.</p>
+    <div class="note">
+      <b>This is an estimate</b>
+      <span>It assumes a shopper who buys pays the cart value they added through the button. Real orders can include other products, discounts or removed items. Purchase counts are shoppers, while cart value is averaged per add. A shopper who used both buttons is counted for both.</span>
+    </div>
+  </section>
+
+  <section aria-labelledby="concl">
+    <h2 id="concl">Conclusion</h2>
+    <div class="verdict">
+      <span class="verdict-k">Recommendation</span>
+      <p><b>Keep FBT on the product pages as it is.</b> It gets only about 14% of add-to-cart clicks, yet it brings in an estimated 37% of the revenue from the two buttons. Each FBT click is worth about ₹115, against ₹31 for a Sticky Cart click.</p>
+    </div>
+    <p>FBT's lower click share is likely down to a few things rather than the block itself:</p>
+    <ul class="reasons">
+      <li><b>It's still new.</b> Shoppers are getting used to buying a bundle from the product page.</li>
+      <li><b>Many shoppers come for one product.</b> Some visitors simply don't want to buy several products in one go.</li>
+      <li><b>Ad targeting.</b> Campaigns that send traffic to a single product bring single-product intent, which suits Sticky Cart over a bundle.</li>
+    </ul>
+    <p>Even with fewer clicks, FBT competes well on revenue, because the shoppers who use it buy more often and spend nearly three times as much per add.</p>
+  </section>
+
+  <footer class="method">
+    <p><b>How this was measured.</b> GA4 funnel exploration, 11–14 Oct 2026 (14 Oct is a partial day), counted by users. Each step must follow the previous one within a set time: click to add to cart within 2 minutes, add to checkout within 30 minutes, checkout to purchase within 1 hour. Sticky Cart adds are identified by the cart_source parameter (sticky_cart). FBT adds use the addtocart_fbt event. FBT cart value is the GA4 Event value of addtocart_fbt events. Cart value on a page is the Event value of all add_to_cart events on that page, which already includes FBT and Sticky Cart adds. Estimated revenue is purchases multiplied by the average cart value per add for that button and page; Sticky Cart cart value is the average pack price on Sticky Cart clicks.</p>
+    <p>A shopper who used both buttons appears in both funnels, so the two can't be added together. Purchases show that a shopper who used the button went on to buy; they don't yet confirm which items were bought.</p>
+  </footer>
+</div>
+</body></html>
